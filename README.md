@@ -1,1 +1,1 @@
-# gsite-dev-extension
+# browser-extension-attempt
