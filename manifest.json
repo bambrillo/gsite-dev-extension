@@ -6,7 +6,10 @@
   "permissions": [
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess", 
-    "storage"
+    "storage",
+    "webNavigation",
+    "tabs",
+    "scripting"
   ],
   "host_permissions": ["<all_urls>"],
   "background": {

@@ -26,3 +26,14 @@ fetch(chrome.runtime.getURL("blocked_domains.json"))
       addRules: rules
     });
   });
+
+chrome.webNavigation.onCommitted.addListener(
+  async function(_) {
+    const [tab] = await chrome.tabs.query({active: true, currentWindow: true})
+
+    chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      files: ["blocker.js"]
+    })
+  }
+);
