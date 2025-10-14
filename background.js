@@ -6,7 +6,7 @@ fetch(chrome.runtime.getURL("blocked_domains.json"))
       priority: 1,
       action: { type: "block" },
       condition: {
-        urlFilter: `*://${domain}/*`
+        urlFilter: `${domain}`
       }
     }));
 
