@@ -10,6 +10,17 @@ fetch(chrome.runtime.getURL("blocked_domains.json"))
       }
     }));
 
+    const resourcesRules = data.resources.map((resource, index) => ({
+      id: index + 1001,
+      priority: 1,
+      action: { type: "block" },
+      condition: {
+        urlFilter: resource
+      }
+    }));
+
+    rules.push(...resourcesRules);
+
     chrome.declarativeNetRequest.updateDynamicRules({
       removeRuleIds: rules.map(r => r.id),
       addRules: rules
