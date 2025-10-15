@@ -29,11 +29,22 @@ fetch(chrome.runtime.getURL("blocked_domains.json"))
 
 chrome.webNavigation.onCommitted.addListener(
   async function(_) {
-    const [tab] = await chrome.tabs.query({active: true, currentWindow: true})
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+    const url = tab.url
 
-    chrome.scripting.executeScript({
-      target: {tabId: tab.id},
-      files: ["blocker.js"]
+    let css
+
+    if (url.includes('komiinform.ru')) {
+      css = '#header, .left-adv, .mainContent .text-right + p { display: none !important }'
+    } else if (url.includes('pg11.ru')) {
+      css = '#__next > div + div > div, #footer + div, .contentRightStretchBanner140 { display: none }'
+    } else if (url.includes('komionline.ru')) {
+      css = '.adv-side-left, .adv-side-right, .adv, .adv-row, .sape-links, #slinksBlock { display: none }'
+    }
+
+    chrome.scripting.insertCSS({
+      target: { tabId: tab.id },
+      css: css,
     })
   }
 );
